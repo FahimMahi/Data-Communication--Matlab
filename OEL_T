@@ -1,0 +1,35 @@
+clc
+clear all
+close all
+file = 'E:\tuk.wav';
+conv = 'E:\test.wav';
+[y, fso] = audioread(file);
+fs = 2000; % change this
+audiowrite(conv, y, fs);
+[samp_sig, fs] = audioread(conv);
+% sound(analog_sig, fs);
+% plot(s)
+N = length(samp_sig); % sample lenth
+slength = N/fs; % total time span of audio signal
+samp_t = linspace(0, N/fs, N);
+% Levels for Quantization
+nb = 16; % change this
+L = 2^nb;
+% Quantizing
+delta = (max(samp_sig) - min(samp_sig))/(L-1); % step size
+quant_sig = min(samp_sig) + round((samp_sig-min(samp_sig))/delta)*delta; % quantized signal
+figure
+subplot(2,1,1)
+plot(samp_t, samp_sig, 'r-.', 'linewidth',1.5)
+grid on
+xlabel('time in seconds')
+ylabel('amplitude in volts')
+title('original signal')
+subplot(2,1,2)
+plot(samp_t, quant_sig, 'r-.', 'linewidth',1.5);
+xlabel('time')
+ylabel('amplitude')
+title('quantized signal')
+filename='E:\quants_2K_16.wav';
+audiowrite(filename,quant_sig,fs);
+sound(quant_sig, fs)

@@ -1,0 +1,7 @@
+clc;
+clear all; 
+close all; 
+fs = 8000;
+t = 0:1/fs:1-1/fs;
+x = 3*sin(2*pi*(8*100)*t) + 5*cos(2*pi*(9*100)*t) + 8*randn(size(t));
+plot(t,x)

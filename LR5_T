@@ -1,0 +1,45 @@
+%20-42497-1
+clc
+clear all
+close all
+time_duration = 0.2;
+a = [10 12 11 13]; 
+f = [12 14 8 9];
+analog_t = 0:0.0001:time_duration;
+analog_sig = a(1)*sin(2*pi*f(1)*analog_t) + a(2)*cos(2*pi*f(2)*analog_t) + a(3)*cos(2*pi*f(3)*analog_t) + a(4)*sin(2*pi*f(4)*analog_t + pi/4);
+figure
+subplot(1,2,1)
+plot(analog_t, analog_sig,'linewidth',1.5)
+grid on
+xlabel('time in seconds')
+ylabel('amplitude in volts')
+title('x1')
+fs = 250;
+ts = 1/fs;
+samp_t = 0:1/fs:time_duration;
+samp_sig = a(1)*sin(2*pi*f(1)*samp_t) + a(2)*cos(2*pi*f(2)*samp_t) + a(3)*cos(2*pi*f(3)*samp_t) + a(4)*sin(2*pi*f(4)*samp_t + pi/4);
+subplot(1,2,2)
+plot(samp_t, samp_sig,'o','linewidth',1.5)
+grid on
+xlabel('time in seconds')
+ylabel('amplitude in volts')
+L = 8;
+delta = (max(samp_sig) - min(samp_sig))/(L-1); 
+quant_sig = min(samp_sig) + round((samp_sig-min(samp_sig))/delta)*delta;
+figure
+subplot(1,2,1)
+plot(samp_t, samp_sig,'o','linewidth',1.5)
+grid on
+xlabel('time in seconds')
+ylabel('amplitude in volts')
+title('x2')
+subplot(1,2,2)
+plot(samp_t, quant_sig,'x','linewidth',1.5);
+xlabel('time')
+ylabel('amplitude')
+nb = log2(L);
+i = round((samp_sig-min(samp_sig))/delta); 
+dig_data_matrix = de2bi(i,nb); 
+dig_data = reshape(dig_data_matrix',1,[]); 
+disp(['The index values for encoding from quantization of the sampled signal are: ',num2str(i)])
+disp(['The converted bits from the input analog signal are: ',num2str(dig_data)])

@@ -1,0 +1,26 @@
+clc;
+clear all; 
+close all; 
+A1=20;
+A2=11;
+DG=31;
+CDEF = 4351;
+t = -0.0002:0.000005:0.0006;
+j1 = DG*pi/180;
+j2 = 30*pi/180;
+X1=A1*cos((2*pi*(CDEF)*t)+j1);
+subplot(3,1,1);
+plot(t,X1),grid on
+grid minor;
+title('Time Domain of X1 have')
+hold on
+X2=A2*cos((2*pi*(CDEF)*t)+j2);
+subplot(3,1,2)
+plot(t,X2),grid on
+grid minor;
+title('Time Domain of X2 have')
+X3=X1+X2;
+subplot(3,1,3);
+plot(t,X3), grid on
+grid minor;
+title('Time Domain of X3 have')

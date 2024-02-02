@@ -1,0 +1,16 @@
+clc;
+clear all; 
+close all; 
+fs=100000;
+d=0.001;
+t=-d:1/fs:d; 
+A1=20; 
+A2=1;
+x1 = 20*cos(2*pi*(4297)*t + (20*pi/180));
+subplot(3,1,1);
+plot(t,x1); 
+grid on;
+x2 = cos(2*pi*(4297)*t + (30*pi/180));
+subplot(3,1,2);
+plot(t,x2);
+grid on;

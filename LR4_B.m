@@ -1,0 +1,11 @@
+clc;
+clear all; 
+close all; 
+fs = 48000;
+t = 0:1/fs:1-1/fs;
+x = 20*sin(2*pi*(4*100)*t) + 27*cos(2*pi*(0*100)*t) + 21*randn(size(t));
+SNR = snr(x);
+bandwidth = obw(x,fs);
+Capacity = bandwidth*log2 (1+SNR);
+n = Capacity/(2*bandwidth);
+signalLevel = 2^(Capacity/(2*bandwidth));
